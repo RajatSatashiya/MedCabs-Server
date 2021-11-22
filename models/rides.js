@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const ridesSchema = new mongoose.Schema({
+const ridesSchema = new Schema({
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   price: {
@@ -18,8 +19,8 @@ const ridesSchema = new mongoose.Schema({
     required: true,
   },
   user: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
 });
 

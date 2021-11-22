@@ -18,7 +18,6 @@ router.post("/", async (req, res) => {
         limit: 1,
       })
       .send();
-    // console.log(destination.body.features[0].geometry.coordinates);
     const driver = await Driver.aggregate([{ $sample: { size: 1 } }]);
     res.send({
       driver,

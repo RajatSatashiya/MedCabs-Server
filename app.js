@@ -18,6 +18,7 @@ const app = express();
 const login = require("./routes/login");
 const signup = require("./routes/signup");
 const driver = require("./routes/driver");
+const rides = require("./routes/rides");
 
 //middlewares
 app.use(cors());
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/getDriver", driver);
+app.use("/rides", rides);
 
 //start the server
 const PORT = process.env.PORT || 4000;
