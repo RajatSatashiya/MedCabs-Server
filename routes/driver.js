@@ -4,10 +4,26 @@ const Driver = require("../models/Driver");
 const mailUtils = require("../utils/mailUtils");
 const otpGenerator = require("otp-generator");
 
+//mapbox setup
+const mbxGeoCoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geoCoder = mbxGeoCoding({ accessToken: mapBoxToken });
+
+//routes
 router.post("/", async (req, res) => {
   try {
+    const destination = await geoCoder
+      .forwardGeocode({
+        query: req.body.location,
+        limit: 1,
+      })
+      .send();
+    // console.log(destination.body.features[0].geometry.coordinates);
     const driver = await Driver.aggregate([{ $sample: { size: 1 } }]);
-    res.send(driver);
+    res.send({
+      driver,
+      coords: destination.body.features[0].geometry.coordinates,
+    });
   } catch (e) {
     console.log("Error: " + e);
   }
@@ -15,13 +31,14 @@ router.post("/", async (req, res) => {
 
 router.post("/otp", async (req, res) => {
   try {
-    const { mail } = req.body;
-    const otp = otpGenerator.generate(6, {
-      upperCase: false,
-      specialChars: false,
-      alphabets: false,
-    });
-    mailUtils.sendOTP(mail, otp);
+    // const { mail } = req.body;
+    // const otp = otpGenerator.generate(6, {
+    //   upperCase: false,
+    //   specialChars: false,
+    //   alphabets: false,
+    // });
+    // mailUtils.sendOTP(mail, otp);
+    const otp = 123456;
     res.send(otp);
   } catch (e) {
     console.log("Error: " + e);
