@@ -31,14 +31,13 @@ router.post("/", async (req, res) => {
 
 router.post("/otp", async (req, res) => {
   try {
-    // const { mail } = req.body;
-    // const otp = otpGenerator.generate(6, {
-    //   upperCase: false,
-    //   specialChars: false,
-    //   alphabets: false,
-    // });
-    // mailUtils.sendOTP(mail, otp);
-    const otp = 123456;
+    const { mail } = req.body;
+    const otp = otpGenerator.generate(6, {
+      upperCase: false,
+      specialChars: false,
+      alphabets: false,
+    });
+    mailUtils.sendOTP(mail, otp);
     res.send(otp);
   } catch (e) {
     console.log("Error: " + e);
