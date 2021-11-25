@@ -11,8 +11,9 @@ router.post("/", async (req, res) => {
     const token = await generateToken(user);
     res.send({ user, token });
   } catch (e) {
-    console.log(e);
-    res.status(400).send(e);
+    res.status(400).json({
+      message: "Wrong Credentials!!!",
+    });
   }
 });
 

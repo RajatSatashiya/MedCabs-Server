@@ -14,7 +14,9 @@ router.post("/", async (req, res) => {
     res.status(201).send({ user, token });
   } catch (e) {
     console.log("An error: " + e);
-    res.status(400).send(e);
+    res.status(400).json({
+      message: "username/email should be unique",
+    });
   }
 });
 

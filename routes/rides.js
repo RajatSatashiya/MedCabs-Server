@@ -8,6 +8,9 @@ router.post("/save", auth, async (req, res) => {
     const rideHistory = rides(req.body);
     rideHistory.user = req.user._id;
     await rideHistory.save();
+    res.json({
+      rideHistory,
+    });
   }
   res.send("save ride");
 });

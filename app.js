@@ -26,6 +26,7 @@ const login = require("./routes/login");
 const signup = require("./routes/signup");
 const driver = require("./routes/driver");
 const rides = require("./routes/rides");
+const faq = require("./routes/faq");
 
 //middlewares
 app.use(cors());
@@ -45,6 +46,7 @@ app.use("/login", login);
 app.use("/signup", signup);
 app.use("/getDriver", driver);
 app.use("/rides", rides);
+app.use("/faq", faq);
 
 //findUser function
 var findUser = async (decodedId) => {
