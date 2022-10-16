@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
       })
       .send();
     const driver = await Driver.aggregate([{ $sample: { size: 1 } }]);
+    console.log(driver);
     res.send({
       driver,
       coords: destination.body.features[0].geometry.coordinates,
@@ -31,12 +32,15 @@ router.post("/", async (req, res) => {
 router.post("/otp", async (req, res) => {
   try {
     const { mail } = req.body;
-    const otp = otpGenerator.generate(6, {
+    var otp = otpGenerator.generate(6, {
       upperCase: false,
       specialChars: false,
       alphabets: false,
     });
     mailUtils.sendOTP(mail, otp);
+    if (otp.charAt(0) === "0") {
+      otp = Number(otp) + 100000;
+    }
     res.send(otp);
   } catch (e) {
     console.log("Error: " + e);
